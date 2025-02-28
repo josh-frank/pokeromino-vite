@@ -1,35 +1,113 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.scss';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from 'react';
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+import {
+  deck,
+  calculateBestHand,
+  payTable,
+  handValue,
+} from './poker';
+
+import Board from './assets/components/Board';
+import BonusHand from './assets/components/BonusHand';
+import FlashMessage from './assets/components/FlashMessage';
+
+const App = () => {
+
+  const [ message, setMessage ] = useState();
+
+  const [ bonus, setBonus ] = useState( {
+    deck: deck( true, true ),
+    hand: [],
+  } );
+
+  const [ state, setState ] = useState( {
+    score: 0,
+    board: [ Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ) ],
+    guess: [],
+    bestHand: [],
+  } );
+
+  const flashMessage = message => {
+    setMessage( message );
+    setTimeout( () => setMessage(), 3000 );
+  };
+
+  const drawBoard = async () => {
+
+    setState( {
+      ...state,
+      board: [ Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ) ],
+      guess: [],
+      bestHand: [],
+    } );
+
+    if ( bonus.hand.length === 5 ) setBonus( {
+      deck: deck( true, true ),
+      hand: [],
+    } );
+
+    await new Promise( resolve => setTimeout( resolve, 250 ) ).then( () => {
+      const newDeck = deck( true );
+      setState( {
+        ...state,
+        board: [ newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ) ],
+        guess: [],
+        bestHand: [],
+      } );
+    } );
+
+  };
+
+  const evaluateGuess = () => {
+
+    let score = state.score,
+      bestHand = calculateBestHand( state.board, 5 ),
+      points = payTable[ handValue( state.guess ) ] * 50,
+      sum = ( a, b ) => a + b,
+      awesome = state.guess.reduce( sum, 0 ) === bestHand.reduce( sum, 0 );
+
+    if ( awesome ) points *= 2;
+    score += points;
+    const drawBonusHand = [ ...bonus.hand, bonus.deck.pop() ];
+    if ( drawBonusHand.length === 5 ) score *= payTable[ handValue( drawBonusHand ) ];
+    flashMessage( `${ awesome ? 'Awesome! ' : 'Nice: ' } +${ points } points` );
+
+    setState( {
+      ...state,
+      score,
+      bestHand,
+    } );
+    setBonus( { ...bonus, hand: drawBonusHand } );
+
+  };
+
+  return <main className="App">
+
+    <FlashMessage message={ message } />
+
+    <BonusHand bonus={ bonus } />
+
+    <Board state={ state } setState={ setState }/>
+
+    <section style={ scorecardStyle }>
+      <span>Score: { state.score }</span>
+      <span>
+        <button onClick={ drawBoard } disabled={ !state.bestHand.length & !!state.board[ 0 ][ 0 ] }>Draw board</button>
+        <button onClick={ evaluateGuess } disabled={ state.guess.length < 5 || !!state.bestHand.length }>Guess</button>
+      </span>
+    </section>
+
+  </main>;
+
 }
 
-export default App
+export default App;
+
+const scorecardStyle = {
+  display: "flex",
+  gap: 5,
+  fontSize: "18pt",
+  justifyContent: "space-around",
+};
