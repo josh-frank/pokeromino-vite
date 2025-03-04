@@ -3,12 +3,12 @@ import { flushes, fiveUniqueCards, hashAdjust, hashValues } from "./lookupTables
 export const suits = { 8: "Clubs", 4: "Diamonds", 2: "Hearts", 1: "Spades" };
 export const rankPrimes = [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41 ];
 
-export function rank(card) { return ( card >>> 8 ) % 16; }
-export function suit(card) { return ( card >>> 12 ) % 16; }
+export function rank( card ) { return ( card >>> 8 ) % 16; }
+export function suit( card ) { return ( card >>> 12 ) % 16; }
 
 export const rankNames = [ "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace" ];
 export const suitNames = [ null, "Spades", "Hearts", null, "Diamonds", null, null, null, "Clubs" ];
-export function cardName(card) { return `${ rankNames[ rank( card ) ] } of ${ suitNames[ suit( card ) ] }`; }
+export function cardName( card ) { return `${ rankNames[ rank( card ) ] } of ${ suitNames[ suit( card ) ] }`; }
 
 export function deck( shuffled, bonusDeck ) {
     const result = [];

@@ -7,6 +7,7 @@ import {
   calculateBestHand,
   payTable,
   handValue,
+  evaluateHand,
 } from './poker';
 
 import Board from './assets/components/Board';
@@ -22,12 +23,14 @@ const App = () => {
     hand: [],
   } );
 
-  const [ state, setState ] = useState( {
+  const [ game, setGame ] = useState( {
     score: 0,
     board: [ Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ) ],
     guess: [],
     bestHand: [],
   } );
+
+  // const [ rounds, setRounds ] = useState( {} );
 
   const flashMessage = message => {
     setMessage( message );
@@ -36,8 +39,8 @@ const App = () => {
 
   const drawBoard = async () => {
 
-    setState( {
-      ...state,
+    setGame( {
+      ...game,
       board: [ Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ), Array( 4 ).fill( 0 ) ],
       guess: [],
       bestHand: [],
@@ -50,8 +53,8 @@ const App = () => {
 
     await new Promise( resolve => setTimeout( resolve, 250 ) ).then( () => {
       const newDeck = deck( true );
-      setState( {
-        ...state,
+      setGame( {
+        ...game,
         board: [ newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ) ],
         guess: [],
         bestHand: [],
@@ -62,11 +65,18 @@ const App = () => {
 
   const evaluateGuess = () => {
 
-    let score = state.score,
-      bestHand = calculateBestHand( state.board, 5 ),
-      points = payTable[ handValue( state.guess ) ] * 50,
+    const evaluateGuess = evaluateHand( game.board, game.guess );
+    console.log( evaluateGuess );
+    if ( evaluateGuess < 0 ) {
+      flashMessage( 'Invalid hand' );
+      return;
+    }
+
+    let score = game.score,
+      bestHand = calculateBestHand( game.board, 5 ),
+      points = payTable[ handValue( game.guess ) ] * 50,
       sum = ( a, b ) => a + b,
-      awesome = state.guess.reduce( sum, 0 ) === bestHand.reduce( sum, 0 );
+      awesome = game.guess.reduce( sum, 0 ) === bestHand.reduce( sum, 0 );
 
     if ( awesome ) points *= 2;
     score += points;
@@ -74,8 +84,8 @@ const App = () => {
     if ( drawBonusHand.length === 5 ) score *= payTable[ handValue( drawBonusHand ) ];
     flashMessage( `${ awesome ? 'Awesome! ' : 'Nice: ' } +${ points } points` );
 
-    setState( {
-      ...state,
+    setGame( {
+      ...game,
       score,
       bestHand,
     } );
@@ -89,13 +99,13 @@ const App = () => {
 
     <BonusHand bonus={ bonus } />
 
-    <Board state={ state } setState={ setState }/>
+    <Board game={ game } setGame={ setGame }/>
 
     <section style={ scorecardStyle }>
-      <span>Score: { state.score }</span>
+      <span>Score: { game.score }</span>
       <span>
-        <button onClick={ drawBoard } disabled={ !state.bestHand.length & !!state.board[ 0 ][ 0 ] }>Draw board</button>
-        <button onClick={ evaluateGuess } disabled={ state.guess.length < 5 || !!state.bestHand.length }>Guess</button>
+        <button onClick={ drawBoard } disabled={ !game.bestHand.length & !!game.board[ 0 ][ 0 ] }>Draw board</button>
+        <button onClick={ evaluateGuess } disabled={ game.guess.length < 5 || !!game.bestHand.length }>Guess</button>
       </span>
     </section>
 
