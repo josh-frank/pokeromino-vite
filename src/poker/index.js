@@ -127,7 +127,7 @@ export function calculateBestHand( board, handLength ) {
 
 export function evaluateHand( board, hand ) {
     const possibleHands = allPossibleHands( board, 5 );
-    if ( Object.keys( possibleHands ).indexOf( hand.sort( sortDescending ).join() ) < 0 ) return -1;
+    if ( Object.keys( possibleHands ).indexOf( hand.sort( sortDescending ).join().toString() ) < 0 ) return -1;
     for ( let possibleHand of Object.keys( possibleHands ) ) {
         if ( possibleHands[ possibleHand ] < handRank( hand ) ) return 0;
     }

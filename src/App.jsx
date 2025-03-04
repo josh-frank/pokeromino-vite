@@ -13,8 +13,14 @@ import {
 import Board from './assets/components/Board';
 import BonusHand from './assets/components/BonusHand';
 import FlashMessage from './assets/components/FlashMessage';
+import Modal from './assets/components/Modal';
 
 const App = () => {
+
+  const [ modal, setModal ] = useState( [
+    <h1>POKEROMINO</h1>,
+    <h2>Poker Hands - Boggle Rules!</h2>,
+  ] );
 
   const [ message, setMessage ] = useState();
 
@@ -66,7 +72,6 @@ const App = () => {
   const evaluateGuess = () => {
 
     const evaluateGuess = evaluateHand( game.board, game.guess );
-    console.log( evaluateGuess );
     if ( evaluateGuess < 0 ) {
       flashMessage( 'Invalid hand' );
       return;
@@ -95,6 +100,15 @@ const App = () => {
 
   return <main className="App">
 
+    <Modal
+      display={ !!modal }
+      closeModal={ () => setModal( null ) }
+      width={ 500 }
+      height={ 400 }
+    >
+      { modal }
+    </Modal>
+
     <FlashMessage message={ message } />
 
     <BonusHand bonus={ bonus } />
@@ -106,6 +120,7 @@ const App = () => {
       <span>
         <button onClick={ drawBoard } disabled={ !game.bestHand.length & !!game.board[ 0 ][ 0 ] }>Draw board</button>
         <button onClick={ evaluateGuess } disabled={ game.guess.length < 5 || !!game.bestHand.length }>Guess</button>
+        <button onClick={ () => setGame( { ...game, guess: [] } ) } disabled={ !game.guess.length || !!game.bestHand.length }>Clear</button>
       </span>
     </section>
 
