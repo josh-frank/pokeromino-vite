@@ -7,8 +7,11 @@ export function rank( card ) { return ( card >>> 8 ) % 16; }
 export function suit( card ) { return ( card >>> 12 ) % 16; }
 
 export const rankNames = [ "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King", "Ace" ];
+export const rankNamesShort = [ "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A" ];
 export const suitNames = [ null, "Spades", "Hearts", null, "Diamonds", null, null, null, "Clubs" ];
+export const suitNamesShort = [ null, "♠", "♡", null, "♢", null, null, null, "♣" ];
 export function cardName( card ) { return `${ rankNames[ rank( card ) ] } of ${ suitNames[ suit( card ) ] }`; }
+export function cardNameShort( card ) { return rankNamesShort[ rank( card ) ] + suitNamesShort[ suit( card ) ]; }
 
 export function deck( shuffled, bonusDeck ) {
     const result = [];

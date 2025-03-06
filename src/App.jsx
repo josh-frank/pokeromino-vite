@@ -8,6 +8,7 @@ import {
   payTable,
   handValue,
   evaluateHand,
+  cardNameShort,
 } from './poker';
 
 import Board from './assets/components/Board';
@@ -59,9 +60,11 @@ const App = () => {
 
     await new Promise( resolve => setTimeout( resolve, 250 ) ).then( () => {
       const newDeck = deck( true );
+      const board = [ newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ) ];
+      console.log( board.map( row => row.map( cardNameShort ).join( "┃" ) ).join( "\n━━┼━━┼━━┼━━\n") );
       setGame( {
         ...game,
-        board: [ newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ) ],
+        board,
         guess: [],
         bestHand: [],
       } );
@@ -103,8 +106,8 @@ const App = () => {
     <Modal
       display={ !!modal }
       closeModal={ () => setModal( null ) }
-      width={ 500 }
-      height={ 400 }
+      width={ '50vw' }
+      height={ '40vw' }
     >
       { modal }
     </Modal>
@@ -116,7 +119,7 @@ const App = () => {
     <Board game={ game } setGame={ setGame }/>
 
     <section style={ scorecardStyle }>
-      <span>Score: { game.score }</span>
+      <aside style={ { color: "white" } }>Score: { game.score }</aside>
       <span>
         <button onClick={ drawBoard } disabled={ !game.bestHand.length & !!game.board[ 0 ][ 0 ] }>Draw board</button>
         <button onClick={ evaluateGuess } disabled={ game.guess.length < 5 || !!game.bestHand.length }>Guess</button>

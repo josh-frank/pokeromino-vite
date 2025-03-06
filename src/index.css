@@ -1,10 +1,9 @@
 @font-face {
-  font-family: 'CoopersTown';
-  src: local( 'CoopersTown' ), url( ./assets/fonts/CoopersTown.ttf ) format( truetype );
+  font-family: 'CardCharacters';
+  src: local( 'CardCharacters' ), url( ./assets/fonts/CardCharacters.ttf ) format( truetype );
 }
 
 body {
   margin: 0;
-  color: white;
-  font-family: 'CoopersTown';
+  font-family: 'CardCharacters';
 }

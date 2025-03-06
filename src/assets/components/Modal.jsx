@@ -63,8 +63,8 @@ export const StyledModalDimmer = styled.div`
 export const StyledModalWindow = styled.div`
   position: fixed;
   z-index: 99;
-  // left: calc( ${ ( { width } ) => ( 100 - parseInt( width ) ) / 2 || 25 }% );
-  // top: calc( ${ ( { height } ) => ( 100 - parseInt( height ) ) / 2 || 25 }% );
+  left: calc( ${ ( { width } ) => ( 100 - parseInt( width ) ) / 2 || 25 }% );
+  top: calc( ${ ( { height } ) => ( 100 - parseInt( height ) ) / 2 || 25 }% );
   overflow: none;
   width: ${ ( { width } ) => width || '50%' };
   height: ${ ( { height } ) => height || '50%' };
