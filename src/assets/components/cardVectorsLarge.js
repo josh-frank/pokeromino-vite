@@ -1,4 +1,5 @@
 // import jokerLarge from './cards_large/00.svg';
+import cardBack from './cards_large/00.svg';
 import twoOfClubsLarge from './cards_large/01.svg';
 import twoOfDiamondsLarge from './cards_large/02.svg';
 import twoOfHeartsLarge from './cards_large/03.svg';
@@ -54,6 +55,7 @@ import aceOfSpadesLarge from './cards_large/52.svg';
 
 const cardVectorsLarge = {
     // 0: jokerLarge,
+    0: cardBack,
     98306: twoOfClubsLarge,
     81922: twoOfDiamondsLarge,
     73730: twoOfHeartsLarge,

@@ -4,11 +4,12 @@ import { useState } from 'react';
 
 import {
   deck,
+  bonusDeck,
   calculateBestHand,
   payTable,
   handValue,
   evaluateHand,
-  cardNameShort,
+  boardToString,
 } from './poker';
 
 import Board from './assets/components/Board';
@@ -18,15 +19,22 @@ import Modal from './assets/components/Modal';
 
 const App = () => {
 
-  const [ modal, setModal ] = useState( [
-    <h1>POKEROMINO</h1>,
-    <h2>Poker Hands - Boggle Rules!</h2>,
-  ] );
+  const aboutModal = [
+    <img src='royal_flush.svg' style={ { float: 'right' } } />,
+    <h1 style={ { color: 'white', textAlign: 'center' } }>Pokeromino</h1>,
+    <h2 style={ { color: 'white', textAlign: 'center' } }>Poker Hands, Boggle Rules!</h2>,
+    <p style={ { fontFamily: 'sans-serif', fontWeight: 800, color: 'white', textAlign: 'center' } }>
+      Find the best poker hand on the board and score! Hands must be five cards long and form a continuous path.
+    </p>,
+    <img src='game_guide.svg' />,
+  ];
+
+  const [ modal, setModal ] = useState( [ ...aboutModal ] );
 
   const [ message, setMessage ] = useState();
 
   const [ bonus, setBonus ] = useState( {
-    deck: deck( true, true ),
+    deck: bonusDeck( true ),
     hand: [],
   } );
 
@@ -54,14 +62,14 @@ const App = () => {
     } );
 
     if ( bonus.hand.length === 5 ) setBonus( {
-      deck: deck( true, true ),
+      deck: bonusDeck( true ),
       hand: [],
     } );
 
     await new Promise( resolve => setTimeout( resolve, 250 ) ).then( () => {
       const newDeck = deck( true );
       const board = [ newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ), newDeck.splice( -4 ) ];
-      console.log( board.map( row => row.map( cardNameShort ).join( "┃" ) ).join( "\n━━┼━━┼━━┼━━\n") );
+      console.log( boardToString( board ) );
       setGame( {
         ...game,
         board,
@@ -106,8 +114,9 @@ const App = () => {
     <Modal
       display={ !!modal }
       closeModal={ () => setModal( null ) }
+      backgroundImage='green_felt.jpg'
       width={ '50vw' }
-      height={ '40vw' }
+      height={ '60vh' }
     >
       { modal }
     </Modal>

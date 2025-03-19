@@ -71,21 +71,28 @@ export const StyledModalWindow = styled.div`
   padding: 2vw;
   background-color: ${ ( { backgroundColor = 'white' } ) => backgroundColor };
   ${ ( { backgroundImage } ) => backgroundImage ? `
-	background-image: linear-gradient( rgba( 109, 207, 246, 0 ), rgba( 0, 91, 151, 0.5 ) ), url('${ backgroundImage }');
+	background-image: url('${ backgroundImage }');
 	background-size: cover;
     background-position: top;
   ` : '' }
   box-shadow: 5px 10px 20px black;
   transform: scale( ${ ( { open } ) => open ? '1, 1' : '0, 0' } );
   transition: transform 250ms ease;
+
   & h2 {
     cursor: pointer;
     color: black;
   }
+  & img {
+    width: 320px;
+    max-width: 320px;
+  }
   & p { color: black; }
-  @media only screen and ( max-width: 728px ) {
+
+  @media only screen and ( max-width: 768px ) {
     width: 80%;
     left: calc( 10% );
+    img { width: 100%; }
   }
 `;
 

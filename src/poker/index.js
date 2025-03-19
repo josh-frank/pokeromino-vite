@@ -13,12 +13,24 @@ export const suitNamesShort = [ null, "♠", "♡", null, "♢", null, null, nul
 export function cardName( card ) { return `${ rankNames[ rank( card ) ] } of ${ suitNames[ suit( card ) ] }`; }
 export function cardNameShort( card ) { return rankNamesShort[ rank( card ) ] + suitNamesShort[ suit( card ) ]; }
 
-export function deck( shuffled, bonusDeck ) {
+export function deck( shuffled ) {
     const result = [];
-    for ( let rank = bonusDeck ? 7 : 0; rank < 13; rank++ ) for ( let suit of [ 8, 4, 2, 1 ] )
+    for ( let rank = 0; rank < 13; rank++ ) for ( let suit of [ 8, 4, 2, 1 ] )
         result.push( ( rankPrimes[ rank ] ) | ( rank << 8 ) | ( suit << 12 ) | ( ( 1 << rank ) << 16 ) );
     if ( !shuffled ) return result;
-    for ( let i = bonusDeck? 23 : 51; i > 0; i-- ) {
+    for ( let i = 51; i > 0; i-- ) {
+        const j = Math.floor( Math.random() * ( i + 1 ) );
+        [ result[ i ], result[ j ] ] = [ result[ j ], result[ i ] ];
+    }
+    return result;
+}
+
+export function bonusDeck( shuffled ) {
+    const result = [];
+    for ( let rank = 7; rank < 13; rank++ ) for ( let suit of [ 8, 4, 2, 1 ] )
+        result.push( ( rankPrimes[ rank ] ) | ( rank << 8 ) | ( suit << 12 ) | ( ( 1 << rank ) << 16 ) );
+    if ( !shuffled ) return result;
+    for ( let i = 23; i > 0; i-- ) {
         const j = Math.floor( Math.random() * ( i + 1 ) );
         [ result[ i ], result[ j ] ] = [ result[ j ], result[ i ] ];
     }
@@ -136,3 +148,5 @@ export function evaluateHand( board, hand ) {
     }
     return 1;
 }
+
+export function boardToString( board ) { return board.map( row => row.map( cardNameShort ).join( "┃" ) ).join( "\n━━┼━━┼━━┼━━\n"); }

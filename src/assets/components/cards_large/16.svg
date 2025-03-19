@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 252">
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="2.5in" height="3.5in" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 180 252">
   <defs>
-    <style>
-      .cls-1 {
-        fill: #ba141a;
-      }
-
-      .cls-2 {
-        fill: #ba2025;
-      }
-    </style>
+    <clipPath id="b">
+      <rect width="180" height="252" rx="18" ry="18" style="fill: none;"/>
+    </clipPath>
   </defs>
-  <g>
-    <g>
-      <polygon class="cls-1" points="25.2 54.58 38.07 35.28 50.94 54.58 38.07 73.88 25.2 54.58"/>
-      <polygon class="cls-1" points="129.06 54.58 141.93 35.28 154.8 54.58 141.93 73.88 129.06 54.58"/>
-    </g>
-    <g>
-      <polygon class="cls-1" points="129.06 197.42 141.93 178.12 154.8 197.42 141.93 216.72 129.06 197.42"/>
-      <polygon class="cls-1" points="25.2 197.42 38.07 178.12 50.94 197.42 38.07 216.72 25.2 197.42"/>
-    </g>
-  </g>
-  <g>
-    <path class="cls-2" d="M18.43,34.91h2.43v-3.14h-11.86v-3.11l12.4-19.66h3.29v18.83h3.68v3.93h-3.68v3.14h1.82v3.93h-8.08v-3.93ZM14.12,27.83h6.74v-10.68l-6.74,10.68Z"/>
-    <path class="cls-2" d="M161.57,217.09h-2.43v3.14h11.86v3.11l-12.4,19.66h-3.29v-18.83h-3.68v-3.93h3.68v-3.14h-1.82v-3.93h8.08v3.93ZM165.88,224.17h-6.74v10.68l6.74-10.68Z"/>
+  <g style="clip-path: url(#b);">
+    <rect x="-.51" width="180" height="252" style="fill: #fff;"/>
+    <path d="M42.92,105.98h9.52v-12.32H5.96v-12.18L54.54,4.48h12.88v73.78h14.42v15.4h-14.42v12.32h7.14v15.4h-31.64v-15.4ZM26.03,78.26h26.41v-41.85l-26.41,41.85Z" style="fill: #ba2025;"/>
+    <polygon points="23.04 54.58 38.07 32.04 53.1 54.58 38.07 77.13 23.04 54.58" style="fill: #fff;"/>
+    <polygon points="25.2 54.58 38.07 35.28 50.94 54.58 38.07 73.88 25.2 54.58" style="fill: #ba141a;"/>
+    <polygon points="126.9 54.58 141.93 32.04 156.96 54.58 141.93 77.13 126.9 54.58" style="fill: #fff;"/>
+    <polygon points="129.06 54.58 141.93 35.28 154.8 54.58 141.93 73.88 129.06 54.58" style="fill: #ba141a;"/>
+    <polygon points="126.9 197.42 141.93 174.87 156.96 197.42 141.93 219.96 126.9 197.42" style="fill: #fff;"/>
+    <polygon points="129.06 197.42 141.93 178.12 154.8 197.42 141.93 216.72 129.06 197.42" style="fill: #ba141a;"/>
+    <polygon points="23.04 197.42 38.07 174.87 53.1 197.42 38.07 219.96 23.04 197.42" style="fill: #fff;"/>
+    <polygon points="25.2 197.42 38.07 178.12 50.94 197.42 38.07 216.72 25.2 197.42" style="fill: #ba141a;"/>
   </g>
 </svg>

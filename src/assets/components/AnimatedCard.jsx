@@ -1,6 +1,8 @@
 import cardVectors from "./cardVectors";
+import cardVectorsLarge from "./cardVectorsLarge";
 import { cardName } from '../../poker';
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
+// import { keyframes } from "styled-components";
 
 const AnimatedCard = ( { card, selected, correct, toggleGuess, small = false } ) => {
 
@@ -13,11 +15,11 @@ const AnimatedCard = ( { card, selected, correct, toggleGuess, small = false } )
     >
         <button>
             <img
-                src={ cardVectors[ 0 ] }
+                src={ ( small ? cardVectorsLarge : cardVectors )[ 0 ] }
                 alt='Pokeromino'
             />
             <img
-                src={ cardVectors[ card ] }
+                src={ ( small ? cardVectorsLarge : cardVectors )[ card ] }
                 alt={ cardName( card ) }
             />
         </button>
@@ -27,17 +29,31 @@ const AnimatedCard = ( { card, selected, correct, toggleGuess, small = false } )
 
 export default AnimatedCard;
 
-const cardWiggle = () => keyframes`
-    0% { left: 0; }
-    33% { left: -0.25rem; }
-    66% { left: 0.25rem; }
-    100% { left: 0; }
-`;
+// const cardWiggle = () => keyframes`
+//     0% { left: 0; }
+//     33% { left: -0.25rem; }
+//     66% { left: 0.25rem; }
+//     100% { left: 0; }
+// `;
 
 const StyledAnimatedCard = styled.div`
+    @keyframes card-wiggle {
+        0% { left: 0; }
+        33% { left: -0.25rem; }
+        66% { left: 0.25rem; }
+        100% { left: 0; }
+    }
+
+    @-webkit-keyframes card-wiggle {
+        0% { left: 0; }
+        33% { left: -0.25rem; }
+        66% { left: 0.25rem; }
+        100% { left: 0; }
+    }
+
     background-color: transparent;
-    width: ${ ( { small } ) => small ? 50 : 100 }px;
-    height: ${ ( { small } ) => small ? 50 : 100 }px;
+    width: ${ ( { small } ) => small ? 64 : 100 }px;
+    height: ${ ( { small } ) => small ? 72 : 100 }px;
     padding: 0.5rem;
     perspective: 1000px;
     button {
@@ -64,7 +80,13 @@ const StyledAnimatedCard = styled.div`
         backface-visibility: hidden;
     }
     button:focus {
-        animation: ${ cardWiggle() } 100ms linear;
+        animation: card-wiggle 100ms linear;
+        -o-animation: card-wiggle 100ms linear;
+        -ms-animation: card-wiggle 100ms linear;
+        -moz-animation: card-wiggle 100ms linear;
+        -webkit-animation-name: card-wiggle;
+        -webkit-animation-duration: 100ms;
+        -webkit-animation-timing-function: linear;
     }
     img:nth-child( 2 ) {
         transform: rotateY( ${ ( { card } ) => !!card ? 0 : 1 }turn );
